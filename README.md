@@ -36,6 +36,7 @@ would only create assembly version conflicts.
 | | |
 |---|---|
 | source | a local Black Myth: Wukong installation, assemblies not redistributed |
+| supported game version | `1.0.21.23831` |
 | input set SHA-256 (first 16) | `377109f25eb71a26` |
 | generated with | `JetBrains.Refasmer` (`dotnet tool install -g JetBrains.Refasmer.CliTool`) |
 | visibility | `--omit-non-api-members`, drops private members and types that do not participate in the public API |
@@ -43,10 +44,14 @@ would only create assembly version conflicts.
 Assembly versions are preserved exactly, so a mod compiled against these binds to the
 game's own assemblies without a version mismatch.
 
-Note that the game's assemblies carry no useful build stamp of their own
-(`b1.Managed` and `UnrealEngine` both report `0.0.0.0`), so the input-set hash above is
-the only reliable identifier of which game build these were generated from. Recompute it
-after a game patch to tell whether the refs need regenerating.
+The NuGet package is versioned by the **game** build it supports, `1.0.21.23831`, not by
+the SDK version. The two move independently: a game patch needs new refs, an SDK release
+does not.
+
+The assemblies themselves carry no usable build stamp (`b1.Managed` and `UnrealEngine`
+both report `0.0.0.0`), so the game version cannot be read back out of them. The
+input-set hash above is the content check: recompute it after a game patch to tell
+whether the assemblies actually changed.
 
 ## Regenerating
 
