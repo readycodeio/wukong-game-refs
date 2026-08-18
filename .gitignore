@@ -1,0 +1,12 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# A full (non-reference) game assembly set, if you drop one here for debugging.
+# Never commit real game assemblies.
+full/
+*.pdb
+
+# IDE
+.idea/
+.vs/
