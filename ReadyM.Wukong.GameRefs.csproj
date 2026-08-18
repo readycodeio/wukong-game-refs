@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!--
+        Packs the reference assemblies in ref/ into a NuGet package.
+
+        They go under ref/<tfm>/ rather than lib/<tfm>/. That is NuGet's contract for
+        compile-time-only assemblies: consumers get them on the compiler's reference path
+        and nothing is copied to output or published. Which is exactly right here, the real
+        game assemblies are already loaded in the game process at runtime.
+
+        There is no code in this project, it only carries the package.
+    -->
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);NU5128</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>ReadyM.Wukong.GameRefs</PackageId>
+        <Version>0.3.1</Version>
+        <Authors>ReadyCode Limited</Authors>
+        <Company>ReadyCode Limited</Company>
+        <Description>Reference-only assemblies for the Black Myth: Wukong assemblies that the WukongMP SDK and WukongMP mods compile against. Contains no game code: every method body is stripped, leaving API surface only. The runtime refuses to load these for execution, so mods bind to the real assemblies in-game.</Description>
+        <PackageTags>wukong;wukongmp;readym;modding;reference-assemblies</PackageTags>
+        <PackageProjectUrl>https://github.com/readycodeio/wukong-game-refs</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/readycodeio/wukong-game-refs</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="ref\*.dll" Pack="true" PackagePath="ref\netstandard2.0\" />
+        <None Include="README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+</Project>
