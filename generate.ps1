@@ -67,9 +67,11 @@ $setHash = ([System.BitConverter]::ToString($sha.ComputeHash($acc)) -replace '-'
 if (Test-Path $OutputDir) { Remove-Item (Join-Path $OutputDir '*.dll') -Force }
 New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
 
-# --all keeps every type at its original access modifier
+# --omit-non-api-members drops private members and types that cannot be referenced from
+# another assembly anyway, roughly halving the published surface. It preserves empty vs
+# non-empty struct semantics. Use --all instead if you need full metadata fidelity.
 Write-Output "Running refasmer over $($inputs.Count) assemblies..."
-& refasmer --all -c -O $OutputDir @inputs
+& refasmer --omit-non-api-members true -c -O $OutputDir @inputs
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "refasmer failed with exit code $LASTEXITCODE"

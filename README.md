@@ -21,6 +21,11 @@ at build time.
 `ref/` holds 36 reference assemblies, listed in `assemblies.txt`. That list is the set the
 SDK and the mod repos actually reference from a `Game` folder, nothing more.
 
+Members that cannot be referenced from another assembly are stripped, which keeps the
+published surface to what a mod can actually compile against. Empty versus non-empty
+struct semantics are preserved. `WukongMp.Api`, `WukongMp.Sdk` and the mod template all
+compile against these unchanged.
+
 Deliberately **not** included: the Mono runtime and BCL assemblies the game also ships
 (`mscorlib`, `netstandard`, `System.dll`, `System.Core`, `System.Xml`, `System.Runtime`,
 `Mono.Posix`, and similar). Those come from the target framework. Shipping our own copies
@@ -33,7 +38,7 @@ would only create assembly version conflicts.
 | source | a local Black Myth: Wukong installation, assemblies not redistributed |
 | input set SHA-256 (first 16) | `377109f25eb71a26` |
 | generated with | `JetBrains.Refasmer` (`dotnet tool install -g JetBrains.Refasmer.CliTool`) |
-| visibility | `--all`, every type at its original access modifier |
+| visibility | `--omit-non-api-members`, drops private members and types that do not participate in the public API |
 
 Assembly versions are preserved exactly, so a mod compiled against these binds to the
 game's own assemblies without a version mismatch.
