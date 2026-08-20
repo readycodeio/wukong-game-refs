@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <!--
         Packs the reference assemblies in ref/ into a NuGet package.
@@ -23,7 +23,7 @@
         <PackageId>ReadyM.Wukong.GameRefs</PackageId>
         <!-- The version of Black Myth: Wukong these refs were generated from, not an SDK
              version. This package tracks game builds, the SDK versions separately. -->
-        <Version>1.0.21.23831-preview.1</Version>
+        <Version>1.0.21.23831</Version>
         <Authors>ReadyCode Limited</Authors>
         <Company>ReadyCode Limited</Company>
         <Description>Reference-only assemblies for the Black Myth: Wukong assemblies that the WukongMP SDK and WukongMP mods compile against. Contains no game code: every method body is stripped, leaving API surface only. The runtime refuses to load these for execution, so mods bind to the real assemblies in-game.</Description>
